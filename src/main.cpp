@@ -40,7 +40,7 @@ bool fileExists(std::string const& name) {
 //  Звук клика:        resources/click.ogg    (если файла нет, звука нет)
 // ---------------------------------------------------------------------------
 CCSprite* makeMarkerSprite() {
-    auto custom = "marker.png"_spr;
+    std::string custom = "marker.png"_spr;
     if (fileExists(custom)) {
         if (auto s = CCSprite::create(custom.c_str())) return s;
     }
@@ -49,7 +49,7 @@ CCSprite* makeMarkerSprite() {
 }
 
 void playClickSound() {
-    auto custom = "click.ogg"_spr;
+    std::string custom = "click.ogg"_spr;
     if (fileExists(custom)) {
         FMODAudioEngine::sharedEngine()->playEffect(custom);
     }
