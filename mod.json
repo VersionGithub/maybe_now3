@@ -1,0 +1,49 @@
+{
+	"geode": "5.11.2",
+	"gd": {
+		"win": "2.2081"
+	},
+	"id": "versiongithub.frame-windows",
+	"name": "Frame Windows",
+	"version": "v0.1.2",
+	"developer": "VersionGithub",
+	"description": "Calculates how many frames each click of a .gdr2 macro has and shows it with markers.",
+	"settings": {
+		"macro-path": {
+			"type": "file",
+			"name": "Macro (.gdr2)",
+			"description": "Macro file that is analyzed and played back in Showcase.",
+			"default": "",
+			"control": {
+				"dialog": "open",
+				"filters": [
+					{
+						"files": ["*.gdr2"],
+						"description": "GDR2 macros"
+					}
+				]
+			}
+		},
+		"max-shift": {
+			"type": "int",
+			"name": "Max click shift (frames)",
+			"description": "How many frames to test in each direction. Windows of 20+ frames are shown as '20+'.",
+			"default": 24,
+			"min": 10,
+			"max": 60
+		},
+		"lookahead": {
+			"type": "int",
+			"name": "Lookahead (frames)",
+			"description": "How many frames after the click are simulated to check that the player survives. More = more accurate but slower.",
+			"default": 48,
+			"min": 16,
+			"max": 240
+		},
+		"show-counters": {
+			"type": "bool",
+			"name": "Show counters",
+			"default": true
+		}
+	}
+}
