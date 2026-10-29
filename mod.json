@@ -3,9 +3,9 @@
 	"gd": {
 		"win": "2.2081"
 	},
-	"id": "versiongithub.frame-windows",
+	"id": "b.frame-windows",
 	"name": "Frame Windows",
-	"version": "v0.1.2",
+	"version": "v0.1.3",
 	"developer": "VersionGithub",
 	"description": "Calculates how many frames each click of a .gdr2 macro has and shows it with markers.",
 	"settings": {
