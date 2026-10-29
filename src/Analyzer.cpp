@@ -175,21 +175,29 @@ bool Analyzer::tick(double budget) {
 bool Analyzer::stepOnce() {
     auto before = progressOf(m_pl);
     float warp = std::min(m_pl->m_gameState.m_timeWarp, 1.f);
+    float spt = warp / 240.f;
 
     for (int attempt = 0; attempt < 4; ++attempt) {
+        // первая попытка: ровно один шаг без запаса (иначе остатки копятся, например в TPS bypass Eclipse).
+        // запас добавляем только если шаг не случился из-за округления
+        float dt = spt * (1.f + 0.0001f * static_cast<float>(attempt));
+
         m_pl->m_extraDelta = 0.0;
-        m_pl->update(warp / 240.f * 1.001f);
+        m_pl->update(dt);
 
         auto after = progressOf(m_pl);
         if (after == before + 1) return true;
         if (after > before + 1) {
-            m_error = "The game advanced more than one tick per step (check TPS)";
+            m_error = fmt::format(
+                "The game advanced {} ticks in one step (expected 1) at frame {}. Is a TPS/physics mod interfering?",
+                after - before, before
+            );
             m_fatal = true;
             return false;
         }
-        // after == before: шаг не случился, пробуем ещё раз
+        // after == before: шаг не случился, пробуем ещё раз с чуть большим dt
     }
-    m_error = "The game does not advance frames (progress is stuck)";
+    m_error = fmt::format("The game does not advance frames (stuck at frame {})", before);
     m_fatal = true;
     return false;
 }
